@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { Popover } from '@headlessui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { Button } from '@/components/Button'
-import { Container } from '@/components/Container'
-import { Logo } from '@/components/Logo'
-import { NavLinks } from '@/components/NavLinks'
+import { Button } from '../components/Button'
+import { Container } from '../components/Container'
+import { Logo } from '../components/Logo'
+import { NavLinks } from '../components/NavLinks'
 
 function MenuIcon(props) {
   return (
@@ -55,7 +55,6 @@ export function Header() {
               <Logo className="h-10 w-auto" />
             </Link>
             <div className="hidden lg:flex lg:gap-10">
-              <NavLinks />
             </div>
           </div>
           <div className="flex items-center gap-6">

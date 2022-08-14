@@ -1,16 +1,17 @@
-import { QRCodeSVG } from "qrcode.react";
 import { Button } from "./Button";
+import Image from "next/image";
 
-export function UserCard({user, openModal}) {
+const example = {"first": "Bobby", "last": "Healy"};
+
+export function UserCard({user = example, openModal}) {
     return (
         <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
-            {/* <QRCodeSVG value={link} size={60}/> */}
             <Button className="m-6 px-6" onClick={openModal}>QR</Button>
             <div className="px-6">
                 <div className="flex flex-wrap justify-center">
                     <div className="w-full flex justify-center">
                         <div className="relative">
-                            <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" className="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
+                            <img alt="profile" src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" className="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
                         </div>
                     </div>
                     

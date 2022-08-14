@@ -1,12 +1,10 @@
-import { Header } from '@/components/Header'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { app, database } from '../../../firebaseconfig';
-import { collection, addDoc, getDoc, doc } from 'firebase/firestore';
-import { UserCard } from '@/components/UserCard';
+import { database } from '../../../firebaseconfig';
+import { getDoc, doc } from 'firebase/firestore';
+import { UserCard } from '../../components/UserCard';
 import { useEffect, useState } from 'react';
-import { Loading } from '@/components/Loading';
-import Modal from '@/components/Modal';
+import { Loading } from '../../components/Loading';
+import Modal from '../../components/Modal';
 
 const User = () => {
     const [open, setOpen] = useState(false);
@@ -20,7 +18,6 @@ const User = () => {
     }
 
     useEffect(() => {
-        // console.log("What" + user);
         const docRef = doc(database, 'cards', `${user}`);
         getDoc(docRef)
         .then((snap) => {
@@ -41,7 +38,7 @@ const User = () => {
         .catch((e) => console.log(e))},[user])
     return (
         <>
-        {isLoading ? <Loading/> : (content)}
+        {isLoading ? <Loading/> : content}
         <Modal open={open} setOpen={setOpen} link={router.basePath + router.asPath}/>
         </>
     )

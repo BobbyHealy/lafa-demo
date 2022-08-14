@@ -2,11 +2,16 @@
   "name": "tailwindui-pocket",
   "version": "0.1.0",
   "private": true,
+  "main": "firebaseFunctions.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next src/",
+    "build": "next build src/",
+    "lint": "next lint",
+    "start": "next start src/",
+    "serve": "npm run build && firebase emulators:start --only functions,hosting",
+    "shell": "npm run build && firebase functions:shell",
+    "deploy": "firebase deploy --only functions,hosting",
+    "logs": "firebase functions:log"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
@@ -16,6 +21,8 @@
     "autoprefixer": "^10.4.7",
     "clsx": "^1.1.1",
     "firebase": "^9.9.2",
+    "firebase-admin": "^9.4.2",
+    "firebase-functions": "^3.13.1",
     "focus-visible": "^5.2.0",
     "framer-motion": "^6.5.1",
     "next": "12.2.3",
@@ -30,7 +37,10 @@
   "devDependencies": {
     "eslint": "8.15.0",
     "eslint-config-next": "12.2.3",
+    "firebase-functions-test": "^0.2.3",
+    "firebase-tools": "^9.3.0",
     "prettier": "^2.6.2",
-    "prettier-plugin-tailwindcss": "^0.1.11"
+    "prettier-plugin-tailwindcss": "^0.1.11",
+    "style-loader": "^3.3.1"
   }
 }
