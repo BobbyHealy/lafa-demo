@@ -127,7 +127,7 @@ function Create() {
                         <div className="md:grid md:grid-cols-3 md:gap-6">
                         <div className="md:col-span-1">
                             <h3 className="text-lg font-medium leading-6 text-gray-900">Contact Links</h3>
-                            <p className="mt-1 text-sm text-gray-500">Different links to use in your business card. If you don't want to use one, simply leave empty.</p>
+                            <p className="mt-1 text-sm text-gray-500">Different links to use in your business card. If you dont want to use one, simply leave empty.</p>
                         </div>
                         <div className="mt-5 md:mt-0 md:col-span-2">
                             <div className="grid grid-cols-6 gap-6">
