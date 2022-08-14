@@ -9,34 +9,48 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 function Create() {
-    const [newCard, setNewCard] = useState({});
+    const [newCard, setNewCard] = useState({"links": {}});
     const router = useRouter();
+
+    const communication_platforms = [
+        {title: "Email", name: "email"},
+        {title: "Whatsapp", name: "whatsapp"},
+        {title: "Instagram", name: "instagram"},
+        {title: "Facebook", name: "facebook"},
+        {title: "Reddit", name: "reddit"},
+        {title: "Github", name: "github"},
+        {title: "LinkedIn", name: "linkedin"},
+        {title: "Zoom", name: "zoom"},
+    ]
 
     const saveNote = (card) => {
         const docRef = doc(database, 'cards', `${card.first.toLowerCase()}-${card.last.toLowerCase()}`);
+        
         setDoc(docRef, {
             "first": card.first,
             "last": card.last,
             "id": 11,
-            "links": {"email": card.email},
-            "picture": "/collection/document1"
+            "links": card.links,
+            "picture": "/collection/document1",
+            "organization": card.organization
         })
         router.push(router.basePath + "card/" + `${card.first.toLowerCase()}-${card.last.toLowerCase()}`)
     }
 
     const handleChange = (event) => {
         const property = event.target.name;
-        console.log(property)
-        const copy = newCard;
-        copy[property] = event.target.value
-        setNewCard(copy);
+        if(property == "first" || property == "last" || property == "organization"){
+            console.log(property);
+            const copy = newCard;
+            copy[property] = event.target.value;
+            setNewCard(copy);
+        } else {
+            console.log("Link:" + property);
+            const copy = newCard;
+            copy.links[property] = event.target.value;
+            setNewCard(copy);
+        }
       }
-    
-    const handleSubmit = (event) => {
-        alert('A name was submitted: ' + newCard.name);
-        console.log(newCard)
-        event.preventDefault();
-    }
 
     return (
         <>
@@ -70,7 +84,7 @@ function Create() {
                                 id="first-name"
                                 autoComplete="given-name"
                                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                value={newCard.email}
+                                value={newCard.first}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -91,21 +105,6 @@ function Create() {
                             </div>
 
                             <div className="col-span-6 sm:col-span-4">
-                                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-                                Email address
-                                </label>
-                                <input
-                                type="text"
-                                name="email"
-                                id="email-address"
-                                autoComplete="email"
-                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                value={newCard.email}
-                                onChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-4">
                                 <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
                                     Organization
                                 </label>
@@ -118,6 +117,96 @@ function Create() {
                                 onChange={handleChange}
                                 />
                             </div>
+
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                        <div className="md:grid md:grid-cols-3 md:gap-6">
+                        <div className="md:col-span-1">
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">Contact Links</h3>
+                            <p className="mt-1 text-sm text-gray-500">Different links to use in your business card. If you don't want to use one, simply leave empty.</p>
+                        </div>
+                        <div className="mt-5 md:mt-0 md:col-span-2">
+                            <div className="grid grid-cols-6 gap-6">
+                            {communication_platforms.map((platform) => {
+                                return (
+                            <div key={platform.name} className="col-span-6 sm:col-span-4">
+                                <label htmlFor={platform.name} className="block text-sm font-medium text-gray-700">
+                                {platform.title}
+                                </label>
+                                <input
+                                type="text"
+                                name={platform.name}
+                                id={platform.name}
+                                autoComplete={platform.name}
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={newCard.links[platform.name]}
+                                onChange={handleChange}
+                                />
+                            </div>)
+                            })}
+                            {/* <div className="col-span-6 sm:col-span-4">
+                                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                                Email address
+                                </label>
+                                <input
+                                type="text"
+                                name="email"
+                                id="email-address"
+                                autoComplete="email"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={newCard.links.email}
+                                onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-4">
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                                Whatsapp Number (optional)
+                                </label>
+                                <input
+                                type="text"
+                                name="whatsapp"
+                                id="whatsapp"
+                                autoComplete="phone"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={newCard.links.whatsapp}
+                                onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-4">
+                                <label htmlFor="link" className="block text-sm font-medium text-gray-700">
+                                Facebook Link (optional)
+                                </label>
+                                <input
+                                type="text"
+                                name="facebook"
+                                id="facebook"
+                                autoComplete="phone"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={newCard.links.facebook}
+                                onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-4">
+                                <label htmlFor="link" className="block text-sm font-medium text-gray-700">
+                                Instagram Link (optional)
+                                </label>
+                                <input
+                                type="text"
+                                name="instagram"
+                                id="instagram"
+                                autoComplete="phone"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={newCard.links.instagram}
+                                onChange={handleChange}
+                                />
+                            </div> */}
 
                             </div>
                         </div>

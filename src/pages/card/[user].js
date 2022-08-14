@@ -16,6 +16,7 @@ const User = () => {
     const openModal = () => {
         setOpen(true);
     }
+    console.log("base path:" + router.defaultLocale);
 
     useEffect(() => {
         const docRef = doc(database, 'cards', `${user}`);
@@ -39,7 +40,7 @@ const User = () => {
     return (
         <>
         {isLoading ? <Loading/> : content}
-        <Modal open={open} setOpen={setOpen} link={router.basePath + router.asPath}/>
+        <Modal open={open} setOpen={setOpen} link={"https://lafa-demo-km2eo.ondigitalocean.app/" + router.asPath}/>
         </>
     )
 }
